@@ -1,13 +1,13 @@
-
 # Zig2
-# en
-**About**
-Zig2 is a programming language that was born on the basis of the idea of ​​the Zig programming language, but the main goal of which is the speed of compilation, absolute cross-platform compatibility and minimal speed of adding new keywords (added at the rate of 1 word per 1 standard).
-**How does it take the max speed compilation**
-*Main ideas*:
-- There isn't compiler. It's translator to C programming languages, and get macroses to do the compiler passes.
-- There isn't any macroses. All macroses turn into *comptime_<N>*, like in Zig programming language, that meaning this action will do in the N compiller pass.
-- There adding one keyword per standard. There notime, when does the keyword deleted from the standard. To set standard, you need to use the special compile flag *std*, with the value like *zig2_<number_of_standard>*
-- To set that some word doesn't need to be transalted, you can use the special compiler flag *without*
-- The all code translate with the assumption that all code is in standard. There is special instrument to check it. If you want to use unstandard code, you need to added the *unstanderd* flag in the standard value. It will be writed on ABI.
-- The base standard it get by C language.
+
+## About
+Zig2 is a programming language born from the ideas of the Zig programming language, but its main goals are maximum compilation speed, absolute cross-platform compatibility, and an extremely slow rate of adding new keywords (limited to at most 1 word per standard version).
+
+## How it achieves maximum compilation speed
+* **There is NO compiler:** Zig2 is not a compiler; it is a fast translator to the C programming language. It completely cuts out the heavy compiler backend and reuses existing tools (`tcc` for metaprogramming, `gcc`/`clang` for optimization, and `mold` for parallel linking).
+* **There are NO macros:** All C preprocessor macros are eliminated. They are replaced by `comptime_<N>` blocks (like in Zig), meaning that this specific action will be executed during the $N$-th compiler pass.
+* **Strict Syntax Discipline:** Exactly one keyword can be added per standard version. Keywords are permanent and can never be deleted from the standard. To lock a file to a specific version, use the `-std=zig2_<number>` flag.
+* **Optimization by Omission:** To tell the translator that a certain keyword doesn't need to be processed in a file, you can use the special `-without <keyword>` flag. The translator will completely ignore it, saving memory and compilation time.
+* **Guaranteed Portability by Default:** All code is strictly translated under the assumption that it is 100% standard and portable. There is a special instrument to check this. 
+* **Explicit Non-Portable Escape Hatch:** If you want to use unstandard/non-portable code, you must explicitly add the `_UnPortable` suffix to your standard flag (e.g., `-std=zig2_v1_UnPortable`). This choice will be permanently written into the object file's ABI.
+* **C-Based Foundation:** The baseline standard and syntax are fully derived from the clean C programming language.
