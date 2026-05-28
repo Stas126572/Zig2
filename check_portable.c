@@ -49,7 +49,7 @@ int main(int argc, char **argv) {
     }
 
     fclose(f);
-    printf("Absolute portable\n", argv[1]);
+    printf("File %s absolute portable\n", argv[1]);
     return EXIT_SUCCESS;
 }
 
